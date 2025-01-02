@@ -1,0 +1,8 @@
+[package]
+name = "paxit"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+zip = "2.2"
+tar = "0.4"
