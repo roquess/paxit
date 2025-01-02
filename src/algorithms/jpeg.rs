@@ -15,7 +15,7 @@ impl Pack for Jpeg {
         let input_file = files[0];
         let img = open(input_file).map_err(|e| io::Error::new(io::ErrorKind::Other, e))?;
         let mut output_file = BufWriter::new(File::create(output)?);
-        img.write_to(&mut output_file, ImageFormat::Jpeg).map_err(|e| io::Error::new(io::ErrorKind::Other, e))?; // 85 is the quality setting
+        img.write_to(&mut output_file, ImageFormat::Jpeg).map_err(|e| io::Error::new(io::ErrorKind::Other, e))?; 
 
         Ok(())
     }
