@@ -1,9 +1,8 @@
 use std::env;
 use std::path::Path;
-use paxit::algorithms::zip::Zip;
-use paxit::algorithms::tar::Tar;
-use paxit::pack::Pack;
 use std::io;
+use paxit::pack::Pack;
+use paxit::algorithms::{Zip, Tar, Jpeg};
 
 fn main() -> io::Result<()> {
     let args: Vec<String> = env::args().collect();
@@ -26,6 +25,8 @@ fn main() -> io::Result<()> {
                 Box::new(Zip)
             } else if output.extension().map_or(false, |ext| ext == "tar") {
                 Box::new(Tar)
+            } else if output.extension().map_or(false, |ext| ext == "jpg" || ext == "jpeg") {
+                Box::new(Jpeg)
             } else {
                 eprintln!("Unsupported file format. Use .zip or .tar");
                 return Ok(());
@@ -41,6 +42,8 @@ fn main() -> io::Result<()> {
                 Box::new(Zip)
             } else if file.extension().map_or(false, |ext| ext == "tar") {
                 Box::new(Tar)
+            } else if file.extension().map_or(false, |ext| ext == "jpg" || ext == "jpeg") {
+                Box::new(Jpeg)
             } else {
                 eprintln!("Unsupported file format. Use .zip or .tar");
                 return Ok(());

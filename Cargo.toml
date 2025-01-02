@@ -9,3 +9,5 @@ description="Paxit is a flexible Rust library for compressing and decompressing 
 [dependencies]
 zip = "2.2"
 tar = "0.4"
+image = "0.25"
+mozjpeg = "0.10"
