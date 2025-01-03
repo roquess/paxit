@@ -2,7 +2,7 @@ use std::env;
 use std::path::Path;
 use std::io;
 use paxit::pack::Pack;
-use paxit::algorithms::{Zip, Tar, Jpeg};
+use paxit::algorithms::{Zip, Tar, Zstd, Jpeg};
 
 fn main() -> io::Result<()> {
     let args: Vec<String> = env::args().collect();
@@ -25,6 +25,8 @@ fn main() -> io::Result<()> {
                 Box::new(Zip)
             } else if output.extension().map_or(false, |ext| ext == "tar") {
                 Box::new(Tar)
+            } else if output.extension().map_or(false, |ext| ext == "zst") {
+                Box::new(Zstd)
             } else if output.extension().map_or(false, |ext| ext == "jpg" || ext == "jpeg") {
                 Box::new(Jpeg)
             } else {
@@ -42,6 +44,8 @@ fn main() -> io::Result<()> {
                 Box::new(Zip)
             } else if file.extension().map_or(false, |ext| ext == "tar") {
                 Box::new(Tar)
+            } else if file.extension().map_or(false, |ext| ext == "zst") {
+                Box::new(Zstd)
             } else if file.extension().map_or(false, |ext| ext == "jpg" || ext == "jpeg") {
                 Box::new(Jpeg)
             } else {
