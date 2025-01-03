@@ -1,8 +1,8 @@
 use std::env;
 use std::path::Path;
-use std::io;
+use paxit::algorithms::{Zip, Tar, Jpeg, Zstd, Lzma};
 use paxit::pack::Pack;
-use paxit::algorithms::{Zip, Tar, Zstd, Jpeg};
+use std::io;
 
 fn main() -> io::Result<()> {
     let args: Vec<String> = env::args().collect();
@@ -14,47 +14,10 @@ fn main() -> io::Result<()> {
     let mode = &args[1];
     let files: Vec<&Path> = args[2..].iter().map(|s| Path::new(s)).collect();
 
-    let compressor: Box<dyn Pack> = match mode.as_str() {
-        "c" | "compress" | "p" | "pack" => {
-            if files.len() < 2 {
-                eprintln!("Usage: paxit <mode> <output> <files...>");
-                return Ok(());
-            }
-            let output = files[0];
-            if output.extension().map_or(false, |ext| ext == "zip") {
-                Box::new(Zip)
-            } else if output.extension().map_or(false, |ext| ext == "tar") {
-                Box::new(Tar)
-            } else if output.extension().map_or(false, |ext| ext == "zst") {
-                Box::new(Zstd)
-            } else if output.extension().map_or(false, |ext| ext == "jpg" || ext == "jpeg") {
-                Box::new(Jpeg)
-            } else {
-                eprintln!("Unsupported file format. Use .zip or .tar");
-                return Ok(());
-            }
-        }
-        "u" | "uncompress" | "unpack" => {
-            if files.len() != 2 {
-                eprintln!("Usage: paxit <mode> <file> <output_dir>");
-                return Ok(());
-            }
-            let file = files[0];
-            if file.extension().map_or(false, |ext| ext == "zip") {
-                Box::new(Zip)
-            } else if file.extension().map_or(false, |ext| ext == "tar") {
-                Box::new(Tar)
-            } else if file.extension().map_or(false, |ext| ext == "zst") {
-                Box::new(Zstd)
-            } else if file.extension().map_or(false, |ext| ext == "jpg" || ext == "jpeg") {
-                Box::new(Jpeg)
-            } else {
-                eprintln!("Unsupported file format. Use .zip or .tar");
-                return Ok(());
-            }
-        }
-        _ => {
-            eprintln!("Invalid mode. Use 'c', 'compress', 'p', 'pack' for compression and 'u', 'uncompress', 'unpack' for decompression.");
+    let compressor = match determine_compressor(mode, &files) {
+        Ok(compressor) => compressor,
+        Err(e) => {
+            eprintln!("{}", e);
             return Ok(());
         }
     };
@@ -71,6 +34,23 @@ fn main() -> io::Result<()> {
             compressor.unpack(file, output_dir)
         }
         _ => Ok(()),
+    }
+}
+
+fn determine_compressor(mode: &str, files: &[&Path]) -> Result<Box<dyn Pack>, String> {
+    let extension = match mode {
+        "c" | "compress" | "p" | "pack" => files[0].extension().and_then(|ext| ext.to_str()),
+        "u" | "uncompress" | "unpack" => files[0].extension().and_then(|ext| ext.to_str()),
+        _ => None,
+    };
+
+    match extension {
+        Some("zip") => Ok(Box::new(Zip)),
+        Some("tar") => Ok(Box::new(Tar)),
+        Some("jpg" | "jpeg") => Ok(Box::new(Jpeg)),
+        Some("zst") => Ok(Box::new(Zstd)),
+        Some("xz") => Ok(Box::new(Lzma)),
+        _ => Err(format!("Unsupported file format. Use .zip, .tar, .jpg/.jpeg, .zst, or .xz")),
     }
 }
 
