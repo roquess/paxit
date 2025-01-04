@@ -3,6 +3,7 @@ Cargo.lock
 debug/
 target/
 test/output/*
+src/algorithms/mod.rs
 
 !test/output/
 !test/output/.gitkeep
