@@ -56,5 +56,9 @@ impl Pack for Zip {
 
         Ok(())
     }
+
+    fn extensions(&self) -> Vec<&'static str> {
+        vec!["zip"]
+    }
 }
 

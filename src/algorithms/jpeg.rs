@@ -23,5 +23,9 @@ impl Pack for Jpeg {
     fn unpack(&self, _file: &Path, _output_dir: &Path) -> io::Result<()> {
         Err(io::Error::new(io::ErrorKind::Unsupported, "Unpacking JPEG is not implemented"))
     }
+
+    fn extensions(&self) -> Vec<&'static str> {
+        vec!["jpg", "jpeg"]
+    }
 }
 

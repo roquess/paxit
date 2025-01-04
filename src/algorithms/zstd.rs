@@ -31,6 +31,10 @@ impl Pack for Zstd {
 
         Ok(())
     }
+
+    fn extensions(&self) -> Vec<&'static str> {
+        vec!["zst"]
+    }
 }
 
 

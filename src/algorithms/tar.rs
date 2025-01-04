@@ -28,5 +28,9 @@ impl Pack for Tar {
         archive.unpack(output_dir)?;
         Ok(())
     }
+
+    fn extensions(&self) -> Vec<&'static str> {
+        vec!["tar"]
+    }
 }
 

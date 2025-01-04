@@ -32,5 +32,9 @@ impl Pack for Lzma {
 
         Ok(())
     }
+
+    fn extensions(&self) -> Vec<&'static str> {
+        vec!["xz"]
+    }
 }
 
