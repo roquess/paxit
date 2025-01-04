@@ -1,19 +1,22 @@
+use std::env;
 use std::fs;
 use std::path::PathBuf;
 
 fn main() {
-    let dest_path = PathBuf::from("src/algorithms/mod.rs");
+    // Get the OUT_DIR environment variable
+    let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
+    let dest_path = out_dir.join("mod.rs");
 
     let mut mod_file = String::new();
     let algorithms_dir = PathBuf::from("src/algorithms");
 
+    // Generate module declarations
     for entry in fs::read_dir(&algorithms_dir).unwrap() {
         let entry = entry.unwrap();
         let path = entry.path();
         if path.is_file() && path.extension().map_or(false, |ext| ext == "rs") {
             let file_name = path.file_stem().unwrap().to_str().unwrap();
             if file_name != "mod" {
-                // Ajouter chaque fichier comme un module
                 mod_file.push_str(&format!("pub mod {};\n", file_name));
             }
         }
@@ -79,6 +82,7 @@ fn main() {
     mod_file.push_str("    ))\n");
     mod_file.push_str("}\n");
 
+    // Write to OUT_DIR instead of src directory
     fs::write(dest_path, mod_file).unwrap();
     println!("cargo:rerun-if-changed=src/algorithms");
 }
@@ -90,4 +94,3 @@ fn capitalize_first_letter(input: &str) -> String {
         Some(first) => first.to_uppercase().collect::<String>() + chars.as_str(),
     }
 }
-
