@@ -80,7 +80,7 @@ fn main() {
     mod_file.push_str("}\n");
 
     fs::write(dest_path, mod_file).unwrap();
-    println!("cargo:rerun-if-changed=src/algorithms");
+    println!("src/algorithms/mod.rs generated");
 }
 
 fn capitalize_first_letter(input: &str) -> String {

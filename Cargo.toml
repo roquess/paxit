@@ -5,7 +5,7 @@ edition = "2021"
 license="MIT"
 repository="https://github.com/roquess/paxit"
 description="Paxit is a flexible Rust library for compressing and decompressing files using various algorithms, with a modular design that allows easy addition of new compression formats."
-build = "src/build.rs"
+default-run = "paxit"
 
 [dependencies]
 zip = "2.2"
@@ -15,3 +15,6 @@ xz2 = "0.1"
 image = "0.25"
 mozjpeg = "0.10"
 
+[[bin]]
+name = "gen_mod"
+path = "src/gen_mod.rs"

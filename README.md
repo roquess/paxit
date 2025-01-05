@@ -77,6 +77,12 @@ To add a new compression algorithm, simply create a new file in the algorithms d
 
 Contributions are welcome! Please open an issue or submit a pull request.
 
+You can update the mod.rs file by running : 
+
+```bash
+cargo r --bin gen_mod
+```
+
 # License
 
 This project is licensed under the MIT License.
