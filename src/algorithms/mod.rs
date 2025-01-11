@@ -2,6 +2,7 @@ pub mod bmp;
 pub mod dds;
 pub mod farbfeld;
 pub mod gif;
+pub mod gzip;
 pub mod hdr;
 pub mod ico;
 pub mod jpeg;
@@ -30,6 +31,7 @@ pub fn determine_compressor(mode: &str, files: &[&Path]) -> Result<Box<dyn Pack>
         Box::new(dds::Dds) as Box<dyn Pack>,
         Box::new(farbfeld::Farbfeld) as Box<dyn Pack>,
         Box::new(gif::Gif) as Box<dyn Pack>,
+        Box::new(gzip::Gzip) as Box<dyn Pack>,
         Box::new(hdr::Hdr) as Box<dyn Pack>,
         Box::new(ico::Ico) as Box<dyn Pack>,
         Box::new(jpeg::Jpeg) as Box<dyn Pack>,
@@ -55,6 +57,7 @@ pub fn determine_compressor(mode: &str, files: &[&Path]) -> Result<Box<dyn Pack>
         dds::Dds.extensions(),
         farbfeld::Farbfeld.extensions(),
         gif::Gif.extensions(),
+        gzip::Gzip.extensions(),
         hdr::Hdr.extensions(),
         ico::Ico.extensions(),
         jpeg::Jpeg.extensions(),

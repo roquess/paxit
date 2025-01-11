@@ -14,6 +14,7 @@ zstd = "0.13"
 xz2 = "0.1"
 image = "0.25"
 mozjpeg = "0.10"
+flate2 = "1.0"
 
 [[bin]]
 name = "gen_mod"
