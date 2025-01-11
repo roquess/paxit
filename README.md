@@ -14,7 +14,7 @@ To use Paxit, add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-paxit = "0.1.3"
+paxit = "0.1.4"
 ```
 
 ## Usage
