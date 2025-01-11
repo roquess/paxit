@@ -4,7 +4,7 @@ Paxit is a flexible Rust library for compressing and decompressing files using v
 
 ## Features
 
-- Supports multiple compression formats: "bmp", "dds", "farbfeld", "gif", "hdr", "ico", "jpg", "jpeg", "xz", "png", "pbm", "pgm", "ppm", "tar", "tga", "tiff", "tif", "webp", "zip", "zst".
+- Supports multiple compression formats: "bmp", "dds", "farbfeld", "gif", "hdr", "ico", "jpg", "jpeg", "xz", "gz", "png", "pbm", "pgm", "ppm", "tar", "tga", "tiff", "tif", "webp", "zip", "zst".
 - Modular design for easy addition of new compression algorithms.
 - Simple command-line interface for compressing and decompressing files.
 
