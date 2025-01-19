@@ -7,8 +7,10 @@ pub mod hdr;
 pub mod ico;
 pub mod jpeg;
 pub mod lzma;
+pub mod lz4;
 pub mod png;
 pub mod pnm;
+pub mod sz;
 pub mod tar;
 pub mod tga;
 pub mod tiff;
@@ -36,8 +38,10 @@ pub fn determine_compressor(mode: &str, files: &[&Path]) -> Result<Box<dyn Pack>
         Box::new(ico::Ico) as Box<dyn Pack>,
         Box::new(jpeg::Jpeg) as Box<dyn Pack>,
         Box::new(lzma::Lzma) as Box<dyn Pack>,
+        Box::new(lz4::Lz4) as Box<dyn Pack>,
         Box::new(png::Png) as Box<dyn Pack>,
         Box::new(pnm::Pnm) as Box<dyn Pack>,
+        Box::new(sz::Sz) as Box<dyn Pack>,
         Box::new(tar::Tar) as Box<dyn Pack>,
         Box::new(tga::Tga) as Box<dyn Pack>,
         Box::new(tiff::Tiff) as Box<dyn Pack>,
@@ -62,8 +66,10 @@ pub fn determine_compressor(mode: &str, files: &[&Path]) -> Result<Box<dyn Pack>
         ico::Ico.extensions(),
         jpeg::Jpeg.extensions(),
         lzma::Lzma.extensions(),
+        lz4::Lz4.extensions(),
         png::Png.extensions(),
         pnm::Pnm.extensions(),
+        sz::Sz.extensions(),
         tar::Tar.extensions(),
         tga::Tga.extensions(),
         tiff::Tiff.extensions(),
